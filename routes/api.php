@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('saveOrUpdate', 'Controller@saveOrUpdate')->name('saveOrUpdate');
+Route::post('list', 'Controller@getList')->name('saveOrUpdate');

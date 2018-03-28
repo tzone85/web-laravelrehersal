@@ -36,4 +36,10 @@ class Controller extends BaseController
         }
 //        return 'It is called'.$request->name;
     }
+
+    public function getList(){
+        $books = Books::all();
+
+        return response()->json(array('data' => $books));
+    }
 }

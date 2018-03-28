@@ -12,7 +12,7 @@
 
 
     </head>
-    <body>
+    <body onload="load();">
 
     <div class="container">
 
@@ -45,23 +45,33 @@
         {{--*************************************************************--}}
 
 
-
-
-
         <form id="bookForm">
+
             {{ csrf_field() }}
+
             <input type="hidden" id="book_id">
         Book Name <input type="text" id="name" required="required" name="name"><br>
         Price: <input type="number" id="price" required="required" name="price"><br>
-        <input type="submit" />
+        <input type="submit" /><br><br>
+
+            <table id="text/javascript" border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </table>
         </form>
+
+
     </div>
 
     {{--Ajax call--}}
     <script type="text/javascript">
 
 
-
+        data = "";
         $('#bookForm').on('submit', function(e) {
 
             e.preventDefault();
@@ -77,6 +87,22 @@
                 }
             });
         });
+
+//        load data onto the table
+
+        load = function(){
+            $.ajax({
+                url:'api/list'
+                type:'POST',
+                success: function(response){
+                    data = response.data;
+                    $('.tr').remove();
+                    for(i=0; i<response.data.length; i++){
+                        $("#table").append("<tr class='tr'> <td> "+response.data[i].book_name+" </td> <td> "+response.data[i].book_price+" </td> <td> <a href='#' onclick= edit("+i+");> Edit </a> </td> </td> <td> <a href='#' onclick='delete_("+response.data[i].book_id+");'> Delete </a>  </td> </tr>");
+                    }
+                }
+            });
+        }
     </script>
 
 
